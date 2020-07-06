@@ -2,8 +2,9 @@ package com.test.commentsapp.data.remote;
 
 import androidx.annotation.NonNull;
 
-import com.test.commentsapp.toolchain.RetrofitUtil;
 import com.test.commentsapp.data.DataConstants;
+import com.test.commentsapp.data.remote.api.CommentsApiService;
+import com.test.commentsapp.toolchain.RetrofitUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,21 +15,21 @@ public class RetrofitServiceHolder {
         private static final String TAG = RetrofitServiceHolder.class.getSimpleName();
 
         @NonNull
-        private static final Retrofit PIC_LIFE_RETROFIT = RetrofitUtil.createRetrofit(
+        private static final Retrofit COMMENTS_RETROFIT = RetrofitUtil.createRetrofit(
                 DataConstants.COMMENTS_BASE_URL, getPicLifeOkHttpClient());
 
         @NonNull
-        private static final CommentsApiService PIC_LIFE_API_SERVICE = PIC_LIFE_RETROFIT
+        private static final CommentsApiService COMMENTS_API_SERVICE = COMMENTS_RETROFIT
                 .create(CommentsApiService.class);
 
         @NonNull
-        public static Retrofit getPicLifeRetrofit() {
-            return PIC_LIFE_RETROFIT;
+        public static Retrofit getCommentRetrofit() {
+            return COMMENTS_RETROFIT;
         }
 
         @NonNull
-        public static CommentsApiService getPicLifeApiService() {
-            return PIC_LIFE_API_SERVICE;
+        public static CommentsApiService getCommentsApiService() {
+            return COMMENTS_API_SERVICE;
         }
 
         @NonNull

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.test.commentsapp.R;
 import com.test.commentsapp.databinding.ActivityHomeBinding;
+import com.test.commentsapp.presentation.fragment.CommentsFragment;
 import com.test.commentsapp.presentation.fragment.InputDataFragment;
 import com.test.commentsapp.presentation.viewmodel.home.HomeSharedViewModel;
 import com.test.commentsapp.toolchain.mvvmbase.BaseFragmentActivity;
@@ -17,6 +18,9 @@ public class HomeActivity extends BaseFragmentActivity<HomeSharedViewModel, Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        mSharedViewModel.getNavigateToCommentsList().observe(this, comments -> {
+            addFragment(CommentsFragment.newInstance(comments), true);
+        });
 
 
     }

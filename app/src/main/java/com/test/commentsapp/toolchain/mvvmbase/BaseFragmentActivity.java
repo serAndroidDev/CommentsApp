@@ -3,8 +3,6 @@ package com.test.commentsapp.toolchain.mvvmbase;
 import android.os.Bundle;
 import android.util.Log;
 
-import androidx.annotation.AnimRes;
-import androidx.annotation.AnimatorRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -66,64 +64,6 @@ public abstract class BaseFragmentActivity<VM extends BaseViewModel, DB extends 
             ft.show(currentFragment);
         } else {
             ft.replace(getContainerViewId(), newFragment);
-
-            if (addToBackStack) {
-                ft.addToBackStack(newFragment.getClass().getSimpleName());
-            }
-        }
-        ft.commit();
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    protected void replaceOrShowFragment(@NonNull Fragment newFragment,
-                                         boolean addToBackStack,
-                                         @AnimatorRes @AnimRes int enter,
-                                         @AnimatorRes @AnimRes int exit,
-                                         @AnimatorRes @AnimRes int popEnter,
-                                         @AnimatorRes @AnimRes int popExit) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(getContainerViewId());
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        if (currentFragment != null && newFragment.getClass().equals(currentFragment.getClass())) {
-            ft.show(currentFragment);
-        } else {
-            ft.setCustomAnimations(enter, exit, popEnter, popExit);
-            ft.replace(getContainerViewId(), newFragment);
-
-            if (addToBackStack) {
-                ft.addToBackStack(newFragment.getClass().getSimpleName());
-            }
-        }
-        ft.commit();
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    protected void replaceOrShowFragment(@NonNull Fragment newFragment,
-                                         boolean addToBackStack,
-                                         int transition) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(getContainerViewId());
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        if (currentFragment != null && newFragment.getClass().equals(currentFragment.getClass())) {
-            ft.show(currentFragment);
-        } else {
-            ft.setTransition(transition);
-            ft.replace(getContainerViewId(), newFragment);
-
-            if (addToBackStack) {
-                ft.addToBackStack(newFragment.getClass().getSimpleName());
-            }
-        }
-        ft.commit();
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    protected void replaceFragment(@NonNull Fragment newFragment, boolean addToBackStack) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(getContainerViewId(), newFragment);
-        if (addToBackStack) {
-            ft.addToBackStack(newFragment.getClass().getSimpleName());
         }
         ft.commit();
     }
@@ -158,7 +98,6 @@ public abstract class BaseFragmentActivity<VM extends BaseViewModel, DB extends 
             int containerViewId = getContainerViewId();
             if (fragmentManager.findFragmentById(containerViewId) == null) {
                 addFragment(startFragment, false);
-                // replaceOrShowFragment(startFragment, false);
             }
         }
     }

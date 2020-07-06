@@ -41,8 +41,8 @@ public abstract class BaseFragment<VM extends BaseViewModel, SVM extends BaseVie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel.getOnBackClicked().observe(getViewLifecycleOwner(), o ->
-//                mSharedViewModel.onBackClicked());
+        mViewModel.getOnBackClicked().observe(getViewLifecycleOwner(), o ->
+                mSharedViewModel.onBackClicked());
     }
 
     @LayoutRes
