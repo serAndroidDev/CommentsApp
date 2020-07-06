@@ -1,6 +1,10 @@
 package com.test.commentsapp.presentation.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -33,7 +37,22 @@ public class InputDataFragment extends BaseFragment<InputDataViewModel, HomeShar
         super.onActivityCreated(savedInstanceState);
 
         mViewModel.getOnSearchClick().observe(getViewLifecycleOwner(), o -> {
-            mViewModel.getComments();
+            String lowerBoundText = mBinding.editLowerValue.getText().toString();
+            String upperBoundText = mBinding.editUpperValue.getText().toString();
+            if (!lowerBoundText.isEmpty() && !upperBoundText.isEmpty()) {
+                int lowerBound = Integer.parseInt(lowerBoundText);
+                int upperBound = Integer.parseInt(upperBoundText);
+                if (lowerBound >= 0 && upperBound > lowerBound ) {
+                    mViewModel.getComments(lowerBound, upperBound);
+                } else {
+                    Toast.makeText(getContext(), "The first number must be bigger than the second",
+                            Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getContext(), "Please enter all data fields", Toast.LENGTH_SHORT).show();
+            }
+
+            hideKeyboard();
         });
 
         mViewModel.getDataComments().observe(getViewLifecycleOwner(), comments -> {
@@ -41,4 +60,15 @@ public class InputDataFragment extends BaseFragment<InputDataViewModel, HomeShar
         });
 
     }
+
+    public void hideKeyboard() {
+        Context context = getContext();
+        if (context != null) {
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(mBinding.getRoot().getWindowToken(), 0);
+            }
+        }
+    }
+
 }

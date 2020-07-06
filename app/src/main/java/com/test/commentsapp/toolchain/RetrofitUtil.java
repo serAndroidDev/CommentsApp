@@ -2,14 +2,11 @@ package com.test.commentsapp.toolchain;
 
 import androidx.annotation.NonNull;
 
-import java.io.IOException;
 import java.net.ConnectException;
 
 import okhttp3.Dispatcher;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okhttp3.logging.HttpLoggingInterceptor.Level;
 import retrofit2.Retrofit;
@@ -58,7 +55,7 @@ public class RetrofitUtil {
 
     @NonNull
     public static OkHttpClient.Builder getSharedOkHttpClientBuilder() {
-        return OK_HTTP_CLIENT_BUILDER.addInterceptor(new CommentsInterceptor());
+        return OK_HTTP_CLIENT_BUILDER;
     }
 
     /**
@@ -75,17 +72,17 @@ public class RetrofitUtil {
         };
     }
 
-    public static class CommentsInterceptor implements Interceptor {
-        @NonNull
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            Request originalRequest = chain.request();
-
-            Request newRequest = originalRequest.newBuilder()
-                    .header("Content-Type","application/json;")
-                    .build();
-            return chain.proceed(newRequest);
-        }
-    }
+//    public static class CommentsInterceptor implements Interceptor {
+//        @NonNull
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//            Request originalRequest = chain.request();
+//
+//            Request newRequest = originalRequest.newBuilder()
+//                    .header("Content-Type","application/json;")
+//                    .build();
+//            return chain.proceed(newRequest);
+//        }
+//    }
 }
 

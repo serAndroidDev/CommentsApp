@@ -1,5 +1,6 @@
 package com.test.commentsapp.presentation.viewmodel.home;
 
+import androidx.annotation.IntRange;
 import androidx.lifecycle.MutableLiveData;
 
 import com.test.commentsapp.data.model.Comment;
@@ -29,9 +30,10 @@ public class InputDataViewModel extends BaseViewModel {
         mSearchClicked.call();
     }
 
-    public void getComments() {
+    public void getComments(@IntRange(from = 0, to = 499) int lowestBound,
+                            @IntRange(from = 1, to = 499) int upperBound) {
         getDisposables().add(new GetCommentsUseCase()
-                .execute()
+                .execute(lowestBound, upperBound)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
