@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">Comments</string>
+    <string name="fragment_input_data_from_label">from</string>
+    <string name="fragment_input_data_to_label">to</string>
+    <string name="fragment_input_data_search_label">search</string>
+    <string name="item_id_label">id:</string>
+    <string name="item_name_label">name:</string>
+    <string name="item_email_label">email:</string>
+    <string name="item_body_label">body:</string>
 
 
 </resources>

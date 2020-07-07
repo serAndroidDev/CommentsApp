@@ -16,7 +16,7 @@ public class RetrofitServiceHolder {
 
         @NonNull
         private static final Retrofit COMMENTS_RETROFIT = RetrofitUtil.createRetrofit(
-                DataConstants.COMMENTS_BASE_URL, getPicLifeOkHttpClient());
+                DataConstants.COMMENTS_BASE_URL, getOkHttpClient());
 
         @NonNull
         private static final CommentsApiService COMMENTS_API_SERVICE = COMMENTS_RETROFIT
@@ -33,7 +33,7 @@ public class RetrofitServiceHolder {
         }
 
         @NonNull
-        private static OkHttpClient getPicLifeOkHttpClient() {
+        private static OkHttpClient getOkHttpClient() {
             return RetrofitUtil.getSharedOkHttpClientBuilder()
                     .connectTimeout(DataConstants.OK_HTTP_CLIENT_CONNECT_TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(DataConstants.OK_HTTP_CLIENT_READ_TIMEOUT, TimeUnit.SECONDS)

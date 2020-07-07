@@ -1,7 +1,5 @@
 package com.test.commentsapp.presentation.viewmodel.comments;
 
-import android.os.Handler;
-
 import androidx.annotation.IntRange;
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,6 +9,7 @@ import com.test.commentsapp.toolchain.mvvmbase.BaseViewModel;
 import com.test.commentsapp.toolchain.mvvmbase.SingleLiveEvent;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -31,16 +30,15 @@ public class CommentsViewModel extends BaseViewModel {
                              @IntRange(from = 1, to = 499) int upperBound) {
         getDisposables().add(new GetCommentsUseCase()
                 .execute(lowestBound, upperBound)
+                .delay(1500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(value -> {
                     // added delay for show animation
                     if (value.isCompleteWithoutError()) {
                         if (value.getResult() != null) {
-                            new Handler().postDelayed(() -> {
-                                mComments.setValue(value.getResult());
-                                mLoadMore.setValue(false);
-                            }, 1500);
+                            mComments.setValue(value.getResult());
+                            mLoadMore.setValue(false);
                         }
                     }
                 }));

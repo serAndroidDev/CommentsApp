@@ -72,17 +72,5 @@ public class RetrofitUtil {
         };
     }
 
-//    public static class CommentsInterceptor implements Interceptor {
-//        @NonNull
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            Request originalRequest = chain.request();
-//
-//            Request newRequest = originalRequest.newBuilder()
-//                    .header("Content-Type","application/json;")
-//                    .build();
-//            return chain.proceed(newRequest);
-//        }
-//    }
 }
 
