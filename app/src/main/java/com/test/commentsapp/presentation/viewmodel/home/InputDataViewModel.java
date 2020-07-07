@@ -4,7 +4,7 @@ import androidx.annotation.IntRange;
 import androidx.lifecycle.MutableLiveData;
 
 import com.test.commentsapp.data.model.Comment;
-import com.test.commentsapp.domain.GetCommentsUseCase;
+import com.test.commentsapp.domain.GetRangeComments;
 import com.test.commentsapp.toolchain.mvvmbase.BaseViewModel;
 import com.test.commentsapp.toolchain.mvvmbase.SingleLiveEvent;
 
@@ -32,7 +32,7 @@ public class InputDataViewModel extends BaseViewModel {
 
     public void getComments(@IntRange(from = 0, to = 499) int lowestBound,
                             @IntRange(from = 1, to = 499) int upperBound) {
-        getDisposables().add(new GetCommentsUseCase()
+        getDisposables().add(new GetRangeComments()
                 .execute(lowestBound, upperBound)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

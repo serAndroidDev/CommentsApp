@@ -18,10 +18,8 @@ public class HomeActivity extends BaseFragmentActivity<HomeSharedViewModel, Acti
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSharedViewModel.getNavigateToCommentsList().observe(this, comments -> {
-            addFragment(CommentsFragment.newInstance(comments), true);
-        });
-
+        mSharedViewModel.getNavigateToCommentsList().observe(this, dataComments ->
+                addFragment(CommentsFragment.newInstance(dataComments.first, dataComments.second, dataComments.third), true));
 
     }
 

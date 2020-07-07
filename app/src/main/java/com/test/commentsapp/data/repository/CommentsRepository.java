@@ -27,7 +27,19 @@ public class CommentsRepository {
                                                        @NonNull String upperBound) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("_sort", "id");
-        queryParams.put("_order", "asc");
+//        queryParams.put("_limit", "10"); // // uses by default
+//        queryParams.put("_order", "asc"); // uses by default
+        queryParams.put("_start", lowBound);
+        queryParams.put("_limit", upperBound);
+        return RetrofitServiceHolder.getCommentsApiService().getComments(queryParams);
+    }
+
+    @NonNull
+    public Single<Response<List<Comment>>> getRangeComments(@NonNull String lowBound,
+                                                       @NonNull String upperBound) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("_sort", "id");
+//        queryParams.put("_order", "asc"); // uses by default
         queryParams.put("_start", lowBound);
         queryParams.put("_end", upperBound);
         return RetrofitServiceHolder.getCommentsApiService().getComments(queryParams);

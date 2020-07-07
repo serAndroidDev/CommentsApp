@@ -12,10 +12,13 @@ import com.test.commentsapp.R;
 import com.test.commentsapp.databinding.FragmentInputDataBinding;
 import com.test.commentsapp.presentation.viewmodel.home.HomeSharedViewModel;
 import com.test.commentsapp.presentation.viewmodel.home.InputDataViewModel;
+import com.test.commentsapp.toolchain.Triple;
 import com.test.commentsapp.toolchain.mvvmbase.BaseFragment;
 
 public class InputDataFragment extends BaseFragment<InputDataViewModel, HomeSharedViewModel,
         FragmentInputDataBinding> {
+
+    private int mLowerBound, mUpperBound;
 
     public static InputDataFragment newInstance() {
         return new InputDataFragment();
@@ -40,10 +43,21 @@ public class InputDataFragment extends BaseFragment<InputDataViewModel, HomeShar
             String lowerBoundText = mBinding.editLowerValue.getText().toString();
             String upperBoundText = mBinding.editUpperValue.getText().toString();
             if (!lowerBoundText.isEmpty() && !upperBoundText.isEmpty()) {
-                int lowerBound = Integer.parseInt(lowerBoundText);
-                int upperBound = Integer.parseInt(upperBoundText);
-                if (lowerBound >= 0 && upperBound > lowerBound ) {
-                    mViewModel.getComments(lowerBound, upperBound);
+                mLowerBound = Integer.parseInt(lowerBoundText);
+                mUpperBound = Integer.parseInt(upperBoundText);
+                if (mLowerBound >= 0 && mUpperBound > mLowerBound) {
+
+                    // load first 10 items or less than 10
+                    int totalItems = mUpperBound - mLowerBound;
+                    int firstItems;
+                    if (totalItems < 10) {
+                        firstItems = mUpperBound;
+                    }
+                    else {
+                        firstItems = 10;
+                    }
+
+                    mViewModel.getComments(mLowerBound, firstItems);
                 } else {
                     Toast.makeText(getContext(), "The first number must be bigger than the second",
                             Toast.LENGTH_LONG).show();
@@ -55,13 +69,12 @@ public class InputDataFragment extends BaseFragment<InputDataViewModel, HomeShar
             hideKeyboard();
         });
 
-        mViewModel.getDataComments().observe(getViewLifecycleOwner(), comments -> {
-            mSharedViewModel.navigateToCommentsList(comments);
-        });
+        mViewModel.getDataComments().observe(getViewLifecycleOwner(), comments ->
+                mSharedViewModel.navigateToCommentsList(new Triple<>(comments, mLowerBound, mUpperBound)));
 
     }
 
-    public void hideKeyboard() {
+    private void hideKeyboard() {
         Context context = getContext();
         if (context != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
